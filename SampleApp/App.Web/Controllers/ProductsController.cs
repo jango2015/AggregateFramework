@@ -39,7 +39,6 @@ namespace App.Web.Controllers
             return RedirectToAction("Index");
         }
 
-
         public ActionResult Discontinue(Guid id)
         {
             var command = new FindProductById(id);
