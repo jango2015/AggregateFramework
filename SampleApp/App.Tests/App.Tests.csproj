@@ -64,6 +64,7 @@
     <Compile Include="Product\Integration\AddProductTests.cs" />
     <Compile Include="Product\Integration\ChangePriceTests.cs" />
     <Compile Include="Product\Integration\DiscontinueProductTests.cs" />
+    <Compile Include="Product\Integration\FindProductByIdTests.cs" />
     <Compile Include="Product\Integration\FindProductsByLocationTests.cs" />
     <Compile Include="Product\SetPriceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
