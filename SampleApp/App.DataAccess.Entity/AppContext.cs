@@ -9,6 +9,10 @@ namespace App.DataAccess
         {
         }
 
+        public AppContext(string connectionStringName) : base(connectionStringName)
+        {
+        }
+
         public DbSet<ProductState> Products { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

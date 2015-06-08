@@ -43,6 +43,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -57,8 +58,14 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="EntityFrameworkIntegrationTest.cs" />
     <Compile Include="Product\ConstructorTests.cs" />
     <Compile Include="Product\DiscontinueTests.cs" />
+    <Compile Include="Product\Integration\AddProductTests.cs" />
+    <Compile Include="Product\Integration\ChangePriceTests.cs" />
+    <Compile Include="Product\Integration\DiscontinueProductTests.cs" />
+    <Compile Include="Product\Integration\FindProductsByLocationTests.cs" />
+    <Compile Include="Product\Integration\UnitTest1.cs" />
     <Compile Include="Product\SetPriceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -70,6 +77,10 @@
     <ProjectReference Include="..\App.Core\App.Core.csproj">
       <Project>{8d9bba33-362c-4e7e-ba97-4164b0b9bec4}</Project>
       <Name>App.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\App.DataAccess.Entity\App.DataAccess.Entity.csproj">
+      <Project>{ed910ad9-ea46-4ddd-9282-d16906289c98}</Project>
+      <Name>App.DataAccess.Entity</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
