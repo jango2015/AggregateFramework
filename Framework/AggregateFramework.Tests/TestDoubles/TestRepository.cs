@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace AggregateFramework.Tests.TestDoubles
 {
-    internal sealed class TestRepository : AggregateFramework.DataAccess.AbstractRepository
+    internal sealed class TestRepository : DataAccess.AbstractRepository
     {
         public object LastSavedState { get; private set; }
         public Type LastTypeRetrieved { get; private set; }
