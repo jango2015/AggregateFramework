@@ -38,8 +38,8 @@ namespace AggregateFramework
         /// <summary>
         /// Constructor provided for serialization purposes.
         /// </summary>
-        /// <param name="info">Serialization information</param>
-        /// <param name="context">Context</param>
+        /// <param name="info">Serialization information.</param>
+        /// <param name="context">Context.</param>
         protected TypeArgumentException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {

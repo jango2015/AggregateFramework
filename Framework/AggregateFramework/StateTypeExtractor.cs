@@ -6,9 +6,9 @@ namespace AggregateFramework
     internal class StateTypeExtractor<T> where T : IAggregate
     {
         /// <summary>
-        /// For a concrete aggregate type T determine the type of its state
+        /// For a concrete aggregate type T determine the type of its state.
         /// </summary>
-        /// <returns>The runtime type of the T's state</returns>
+        /// <returns>The runtime type of the T's state.</returns>
         public Type ExtractStateType()
         {
             var iAggregateGenericInterfacesCount = typeof(T).GetInterfaces().Count(IsGenericIAggregateInterface);
@@ -38,10 +38,10 @@ namespace AggregateFramework
         }
 
         /// <summary>
-        /// Determines if a given type is a generic IAggregate interface
+        /// Determines if a given type is a generic IAggregate interface.
         /// </summary>
-        /// <param name="t">The type to check</param>
-        /// <returns>True if t is a generic IAggregate interface, false it if is not</returns>
+        /// <param name="t">The type to check.</param>
+        /// <returns>True if t is a generic IAggregate interface, false it if is not.</returns>
         private static bool IsGenericIAggregateInterface(Type t)
         {
             return t.IsGenericType && typeof(IAggregate<>).IsAssignableFrom(t.GetGenericTypeDefinition());
