@@ -28,14 +28,14 @@ namespace App.DataAccess
             await _context.SaveChangesAsync();
         }
 
-        protected override object GetById(Type type, object id)
+        protected override TState GetById<TState>(object id)
         {                        
-            return GetSetFor(type).Find(id);
+            return (TState)GetSetFor<TState>().Find(id);
         }
 
-        protected override async Task<object> GetByIdAsync(Type type, object id)
-        {            
-            return await GetSetFor(type).FindAsync(id);
+        protected override async Task<TState> GetByIdAsync<TState>(object id)
+        {
+            return (TState)await GetSetFor<TState>().FindAsync(id);
         }
 
         protected override void Save<T>(T state)
@@ -52,13 +52,6 @@ namespace App.DataAccess
         {
             var set = _context.Set<T>();
             ThrowIfSetIsNull(set, typeof(T));
-            return set;
-        }
-
-        private DbSet GetSetFor(Type t)
-        {
-            var set = _context.Set(t);
-            ThrowIfSetIsNull(set, t);
             return set;
         }
 

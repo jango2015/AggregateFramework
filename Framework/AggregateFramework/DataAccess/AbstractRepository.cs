@@ -14,11 +14,12 @@ namespace AggregateFramework.DataAccess
         /// <typeparam name="T">Type of the aggregate.</typeparam>
         /// <param name="id">Id of the aggregate.</param>
         /// <returns>A rehydrated aggregate.</returns>        
-        public T GetById<T>(object id) where T : IAggregate
-        {
-            var stateType = new StateTypeExtractor<T>().ExtractStateType();
-            var state = GetById(stateType, id);
-            return RehydrateAggregate<T>(state);
+        public TAgg GetById<TAgg, TState>(object id) 
+            where TAgg : IAggregate
+            where TState : class
+        {            
+            var state = GetById<TState>(id);
+            return RehydrateAggregate<TAgg>(state);
         }
 
         /// <summary>
@@ -27,11 +28,12 @@ namespace AggregateFramework.DataAccess
         /// <typeparam name="T">Type of the aggregate.</typeparam>
         /// <param name="id">Id of the aggregate.</param>
         /// <returns>A rehydrated aggregate.</returns> 
-        public async Task<T> GetByIdAsync<T>(object id) where T : IAggregate
+        public async Task<TAgg> GetByIdAsync<TAgg, TState>(object id)
+            where TAgg : IAggregate
+            where TState : class
         {
-            var stateType = new StateTypeExtractor<T>().ExtractStateType();
-            var state = await GetByIdAsync(stateType, id);
-            return RehydrateAggregate<T>(state);
+            var state = await GetByIdAsync<TState>(id);
+            return RehydrateAggregate<TAgg>(state);
         }
 
         /// <summary>
@@ -61,7 +63,7 @@ namespace AggregateFramework.DataAccess
         /// <param name="type">Type of the object to get.</param>
         /// <param name="id">Id of the object to get.</param>
         /// <returns>An instance of the requested type.</returns>
-        protected abstract object GetById(Type type, object id);
+        protected abstract TState GetById<TState>(object id) where TState : class;
 
         /// <summary>
         /// Fetches the object from the repository asynchronously.
@@ -69,24 +71,24 @@ namespace AggregateFramework.DataAccess
         /// <param name="type">Type of the object to get.</param>
         /// <param name="id">Id of the object to get.</param>
         /// <returns>An instance of the requested type.</returns>
-        protected abstract Task<object> GetByIdAsync(Type type, object id);
+        protected abstract Task<TState> GetByIdAsync<TState>(object id) where TState : class;
 
         /// <summary>
         /// Stores an object in the repository.
         /// </summary>
-        /// <typeparam name="T">The type of the object to be stored.</typeparam>
+        /// <typeparam name="TState">The type of the object to be stored.</typeparam>
         /// <param name="state">The object to store.</param>
-        protected abstract void Save<T>(T state) where T : class;
+        protected abstract void Save<TState>(TState state) where TState : class;
 
         /// <summary>
         /// Creates a concrete aggregate instance with the given state.
         /// </summary>
-        /// <typeparam name="T">Concrete type of the aggregate.</typeparam>
+        /// <typeparam name="TAgg">Concrete type of the aggregate.</typeparam>
         /// <param name="state">State of the aggregate.</param>
         /// <returns>Rehydrated aggregate.</returns>
-        private static T RehydrateAggregate<T>(object state) where T : IAggregate
+        private static TAgg RehydrateAggregate<TAgg>(object state) where TAgg : IAggregate
         {
-            var aggregate = (T)Activator.CreateInstance(typeof(T), state);
+            var aggregate = (TAgg)Activator.CreateInstance(typeof(TAgg), state);
             return aggregate;
         }
     }

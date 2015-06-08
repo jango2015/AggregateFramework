@@ -46,7 +46,6 @@
     <Compile Include="DataAccess\IUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceBase.cs" />
-    <Compile Include="StateTypeExtractor.cs" />
     <Compile Include="TypeArgumentException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

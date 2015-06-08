@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web.Mvc;
 using App.Core.Products;
 using App.Web.Models.Products;
+using System.Threading.Tasks;
 
 namespace App.Web.Controllers
 {   
@@ -25,34 +26,38 @@ namespace App.Web.Controllers
 
         public ActionResult Edit(Guid id)
         {
-            var command = new FindProductById(id);
-            var product = _productService.Execute(command);
+            var product = FindProductById(id);
             return View(product.ToEditViewModel());
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(EditProductViewModel product)
+        public async Task<ActionResult> Edit(EditProductViewModel product)
         {
             var command = new ChangePrice(product.Id, product.Price);
-            _productService.Execute(command);
+            await _productService.ExecuteAsync(command);
             return RedirectToAction("Index");
         }
 
         public ActionResult Discontinue(Guid id)
         {
-            var command = new FindProductById(id);
-            var product = _productService.Execute(command);
+            var product = FindProductById(id);
             return View(product.ToViewModel());
-        }
+        }        
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Discontinue(Guid id, FormCollection formCollection)
+        public async Task<ActionResult> Discontinue(Guid id, FormCollection formCollection)
         {
             var command = new DiscontinueProduct(id);
-            _productService.Execute(command);
+            await _productService.ExecuteAsync(command);
             return RedirectToAction("Index");
+        }
+
+        private ProductDto FindProductById(Guid id)
+        {
+            var command = new FindProductById(id);
+            return _productService.Execute(command);
         }
     }
 }
