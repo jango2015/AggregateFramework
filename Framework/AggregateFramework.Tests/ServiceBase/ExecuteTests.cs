@@ -17,7 +17,7 @@ namespace AggregateFramework.Tests.ServiceBase
         {
             _aggregate = new TestAggregate();
             _repo = new Mock<IRepository>();
-            _repo.Setup(r => r.GetById<TestAggregate>(It.IsAny<Guid>())).Returns(_aggregate);
+            _repo.Setup(r => r.GetById<TestAggregate, TestState>(It.IsAny<Guid>())).Returns(_aggregate);
             var sut = new TestService(_repo.Object);
 
             sut.ExecuteAction(Guid.Empty, a => a.PerformAction());           

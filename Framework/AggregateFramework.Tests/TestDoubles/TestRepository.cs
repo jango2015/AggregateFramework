@@ -7,7 +7,6 @@ namespace AggregateFramework.Tests.TestDoubles
     internal sealed class TestRepository : DataAccess.AbstractRepository
     {
         public object LastSavedState { get; private set; }
-        public Type LastTypeRetrieved { get; private set; }
 
         private readonly IDictionary<object, object> _repo = new Dictionary<object, object>();
         private readonly IDictionary<object, object> _trans = new Dictionary<object, object>();
@@ -32,16 +31,14 @@ namespace AggregateFramework.Tests.TestDoubles
             return null;
         }
 
-        protected override object GetById(Type type, object id)
+        protected override TState GetById<TState>(object id)
         {
-            LastTypeRetrieved = type;
-            return _repo[id];
+            return (TState)_repo[id];
         }
 
-        protected override Task<object> GetByIdAsync(Type type, object id)
+        protected override Task<TState> GetByIdAsync<TState>(object id)
         {
-            LastTypeRetrieved = type;
-            return Task.FromResult(_repo[id]);
+            return Task.FromResult((TState)_repo[id]);
         }
 
         protected override void Save<T>(T state)

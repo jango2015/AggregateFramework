@@ -19,17 +19,9 @@ namespace AggregateFramework.Tests.AbstractRepository
         }
 
         [TestMethod]
-        public async Task ItShouldExtractTheStateType()
-        {
-            await _sut.GetByIdAsync<TestAggregate>(_state.Id);  
-          
-            Assert.AreEqual(typeof(TestState), _sut.LastTypeRetrieved);
-        }
-
-        [TestMethod]
         public async Task ItShouldRehydrateWithTheStateObject()
         {
-            var rehydratedAggregate = await _sut.GetByIdAsync<TestAggregate>(_state.Id);
+            var rehydratedAggregate = await _sut.GetByIdAsync<TestAggregate, TestState>(_state.Id);
 
             Assert.AreEqual(_state, rehydratedAggregate.GetState());
         }

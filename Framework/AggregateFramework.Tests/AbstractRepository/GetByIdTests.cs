@@ -7,7 +7,6 @@ namespace AggregateFramework.Tests.AbstractRepository
     [TestClass]
     public class GetByIdTests
     {
-        private static TestRepository _sut;
         private static TestAggregate _rehydratedAggregate;
         private static TestState _state;
 
@@ -15,15 +14,9 @@ namespace AggregateFramework.Tests.AbstractRepository
         public static void Setup(TestContext ctx)
         {
             _state = new TestState { Id = Guid.NewGuid() };
-            _sut = new TestRepository(_state);
+            var sut = new TestRepository(_state);
 
-            _rehydratedAggregate = _sut.GetById<TestAggregate>(_state.Id);
-        }
-
-        [TestMethod]
-        public void ItShouldExtractTheStateType()
-        {
-            Assert.AreEqual(typeof(TestState), _sut.LastTypeRetrieved);
+            _rehydratedAggregate = sut.GetById<TestAggregate, TestState>(_state.Id);
         }
 
         [TestMethod]
