@@ -11,9 +11,10 @@ namespace AggregateFramework.DataAccess
         /// <summary>
         /// Gets a rehydrated aggregate.
         /// </summary>
-        /// <typeparam name="T">Type of the aggregate.</typeparam>
+        /// <typeparam name="TState">Type of the state class contained in TAgg.</typeparam>
+        /// <typeparam name="TAgg">Type of the aggregate.</typeparam>
         /// <param name="id">Id of the aggregate.</param>
-        /// <returns>A rehydrated aggregate.</returns>        
+        /// <returns>A rehydrated aggregate of type TAgg containing its state of type TState.</returns>
         public TAgg GetById<TAgg, TState>(object id) 
             where TAgg : IAggregate
             where TState : class
@@ -25,9 +26,10 @@ namespace AggregateFramework.DataAccess
         /// <summary>
         /// Gets a rehydrated aggregate asynchronously.
         /// </summary>
-        /// <typeparam name="T">Type of the aggregate.</typeparam>
+        /// <typeparam name="TState">Type of the state class contained in TAgg.</typeparam>
+        /// <typeparam name="TAgg">Type of the aggregate.</typeparam>
         /// <param name="id">Id of the aggregate.</param>
-        /// <returns>A rehydrated aggregate.</returns> 
+        /// <returns>A rehydrated aggregate of type TAgg containing its state of type TState.</returns>
         public async Task<TAgg> GetByIdAsync<TAgg, TState>(object id)
             where TAgg : IAggregate
             where TState : class
@@ -37,11 +39,11 @@ namespace AggregateFramework.DataAccess
         }
 
         /// <summary>
-        /// Stores the state of an aggregate.
+        /// Persists the state of an aggregate.
         /// </summary>
-        /// <typeparam name="T">Type of the state to store.</typeparam>
-        /// <param name="aggregate">Aggregate containing the state to store.</param>
-        public void Save<T>(IAggregate<T> aggregate) where T : class
+        /// <typeparam name="TState">Type of the state to persist.</typeparam>
+        /// <param name="aggregate">Aggregate containing the state to persist.</param>
+        public void Save<TState>(IAggregate<TState> aggregate) where TState : class
         {
             Save(aggregate.GetState());
         }
@@ -60,25 +62,25 @@ namespace AggregateFramework.DataAccess
         /// <summary>
         /// Fetches the object from the repository.
         /// </summary>
-        /// <param name="type">Type of the object to get.</param>
-        /// <param name="id">Id of the object to get.</param>
+        /// <typeparam name="T">Type of the object to be fetched.</typeparam>
+        /// <param name="id">Id of the object to fetch.</param>
         /// <returns>An instance of the requested type.</returns>
-        protected abstract TState GetById<TState>(object id) where TState : class;
+        protected abstract T GetById<T>(object id) where T : class;
 
         /// <summary>
         /// Fetches the object from the repository asynchronously.
         /// </summary>
-        /// <param name="type">Type of the object to get.</param>
-        /// <param name="id">Id of the object to get.</param>
+        /// <typeparam name="T">Type of the object to be fetched.</typeparam>
+        /// <param name="id">Id of the object to fetch.</param>
         /// <returns>An instance of the requested type.</returns>
-        protected abstract Task<TState> GetByIdAsync<TState>(object id) where TState : class;
+        protected abstract Task<T> GetByIdAsync<T>(object id) where T : class;
 
         /// <summary>
-        /// Stores an object in the repository.
+        /// Persists an object.
         /// </summary>
-        /// <typeparam name="TState">The type of the object to be stored.</typeparam>
-        /// <param name="state">The object to store.</param>
-        protected abstract void Save<TState>(TState state) where TState : class;
+        /// <typeparam name="T">The type of the object to be persisted.</typeparam>
+        /// <param name="state">The object to persist.</param>
+        protected abstract void Save<T>(T state) where T : class;
 
         /// <summary>
         /// Creates a concrete aggregate instance with the given state.

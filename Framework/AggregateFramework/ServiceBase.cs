@@ -54,7 +54,7 @@ namespace AggregateFramework
             Repo.Commit();
         }
 
-        // <summary>
+        /// <summary>
         /// Saves an aggregate to the repository and commits asynchronously.
         /// </summary>
         /// <param name="aggregate">The aggregate to save.</param>

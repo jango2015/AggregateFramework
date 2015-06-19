@@ -6,16 +6,16 @@ namespace AggregateFramework
     /// Starting point for aggregate classes. Provides a holder for the state of the aggregate.
     /// </summary>
     /// <typeparam name="T">Type of the state contained in the aggregate.</typeparam>
-    public abstract class AbstractAggregate<T> : IAggregate<T> where T : class
+    public abstract class AggregateBase<T> : IAggregate<T> where T : class
     {
         protected readonly T State;
 
-        protected AbstractAggregate(T state)
+        protected AggregateBase(T state)
         {
             State = state;
         }
 
-        protected AbstractAggregate()
+        protected AggregateBase()
         {
             State = Activator.CreateInstance<T>();
         }

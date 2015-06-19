@@ -4,7 +4,7 @@ using App.Core.ReferenceData;
 
 namespace App.Core.Products
 {
-    public class Product : AbstractAggregate<ProductState>
+    public class Product : AggregateBase<ProductState>
     {
         public Product(string name, string description, decimal price)
         {
