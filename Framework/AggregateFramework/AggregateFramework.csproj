@@ -39,7 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AbstractAggregate.cs" />
+    <Compile Include="AggregateBase.cs" />
     <Compile Include="DataAccess\AbstractRepository.cs" />
     <Compile Include="IAggregate.cs" />
     <Compile Include="DataAccess\IRepository.cs" />
