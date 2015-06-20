@@ -1,6 +1,6 @@
 ﻿namespace AggregateFramework.Tests.TestDoubles
 {
-    internal class TestAggregate : AbstractAggregate<TestState>
+    internal class TestAggregate : AggregateBase<TestState>
     {
         public bool ActionWasPerformed { get; private set; }
 
